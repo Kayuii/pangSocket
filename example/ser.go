@@ -3,9 +3,10 @@ package main
 import (
 	"log"
 	"net"
+	// pangsocket "github.com/Kayuii/pangSocket"
 )
 
-var ser = msf.newService(&service.tcpSocket{})
+var ser = pangsocket.newService(&ps.service.tcpSocket)
 
 //框架事件
 //----------------------------------------------------------------------------------------------------------------------
@@ -60,10 +61,10 @@ func (t Test) Hello(fd uint32, data map[string]string) bool {
 	return true
 }
 
-//-----------------------------------------
-func main() {
-	log.SetFlags(log.Lshortfile | log.LstdFlags | log.Llongfile)
-	ser.EventPool.RegisterEvent(&event{})
-	ser.EventPool.RegisterStructFun("test", &Test{})
-	ser.Listening(":8565")
-}
+// //-----------------------------------------
+// func main() {
+// 	log.SetFlags(log.Lshortfile | log.LstdFlags | log.Llongfile)
+// 	ser.EventPool.RegisterEvent(&event{})
+// 	ser.EventPool.RegisterStructFun("test", &Test{})
+// 	ser.Listening(":8565")
+// }

@@ -5,6 +5,8 @@ import (
 	"net"
 
 	"github.com/Kayuii/pangSocket/util"
+	// ms "github.com/Kayuii/pangSocket"
+	// "github.com/Kayuii/pangSocket/util"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-package pangSocket
+package pangsocket
 
 import (
 	"bytes"
@@ -17,6 +17,11 @@ const (
 )
 
 type tcpSocket struct {
+}
+
+func newTCPSocket() *tcpSocket {
+	tsocket := &tcpSocket{}
+	return tsocket
 }
 
 // tcp接收消息

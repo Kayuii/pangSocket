@@ -1,4 +1,4 @@
-package pangSocket
+package pangsocket
 
 import (
 	"bufio"
