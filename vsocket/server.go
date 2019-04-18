@@ -6,25 +6,26 @@ import (
 )
 
 type socketTypes interface {
-	ConnHandle(server *service, sess *session)
+	ConnHandle(server *serv, sess *session)
 	Pack(data []byte) []byte
 }
-type service struct {
+type serv struct {
 	EventPool     *routerMap
 	SessionMaster *sessionManager
 	SocketType    socketTypes
 }
 
-func newService(socketType socketTypes) *service {
-	ser := &service{
-		EventPool:  newRouterMap(),
+// NewService create
+func NewService(socketType socketTypes) *serv {
+	ser := &serv{
+		EventPool:  NewRouterMap(),
 		SocketType: socketType,
 	}
 	ser.SessionMaster = newSessonManager(ser)
 	return ser
 }
 
-func (s *service) Listening(address string) {
+func (s *serv) Listening(address string) {
 	tcpListen, err := net.Listen("tcp", address)
 
 	if err != nil {
@@ -48,7 +49,7 @@ func (s *service) Listening(address string) {
 	}
 }
 
-func (s *service) Hook(fd uint32, requestData map[string]string) bool {
+func (s *serv) Hook(fd uint32, requestData map[string]string) bool {
 	//调用接收消息事件
 	if s.EventPool.OnMessage(fd, requestData) == false {
 		return false

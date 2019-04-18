@@ -25,7 +25,7 @@ func newTCPSocket() *TCPSocket {
 }
 
 // tcp接收消息
-func (ts *TCPSocket) ConnHandle(msf *service, sess *session) {
+func (ts *TCPSocket) ConnHandle(msf *serv, sess *session) {
 	defer func() {
 		msf.SessionMaster.DelSessionByID(sess.ID)
 		//调用断开链接事件

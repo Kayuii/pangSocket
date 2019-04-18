@@ -17,7 +17,7 @@ type WebSocket struct {
 }
 
 // ws接收消息
-func (ws *WebSocket) ConnHandle(msf *service, sess *session) {
+func (ws *WebSocket) ConnHandle(msf *serv, sess *session) {
 	defer func() {
 		msf.SessionMaster.DelSessionByID(sess.ID)
 		//调用断开链接事件

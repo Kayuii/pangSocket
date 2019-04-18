@@ -33,7 +33,7 @@ type routerMap struct {
 	events   events
 }
 
-func newRouterMap() *routerMap {
+func NewRouterMap() *routerMap {
 	return &routerMap{
 		pools:    make(map[string]func(uint32, map[string]string) bool),
 		strPools: make(map[string]map[string]func(uint32, map[string]string) bool),

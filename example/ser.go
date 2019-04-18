@@ -3,10 +3,11 @@ package main
 import (
 	"log"
 	"net"
+	"pangSocket/vsocket"
 	// vsocket "pangSocket"
 )
 
-var ser = vsocket.newService(&ps.service.tcpSocket)
+var ser = vsocket.NewService(&vsocket.TCPSocket{})
 
 //框架事件
 //----------------------------------------------------------------------------------------------------------------------
@@ -57,14 +58,14 @@ func (t Test) AfterRequest(fd uint32, data map[string]string) bool {
 func (t Test) Hello(fd uint32, data map[string]string) bool {
 	log.Println("收到消息了")
 	log.Println(data)
-	ser.SessionMaster.WriteByid(fd, []byte("hehehehehehehehe"))
+	ser.SessionMaster.WriteByID(fd, []byte("hehehehehehehehe"))
 	return true
 }
 
-// //-----------------------------------------
-// func main() {
-// 	log.SetFlags(log.Lshortfile | log.LstdFlags | log.Llongfile)
-// 	ser.EventPool.RegisterEvent(&event{})
-// 	ser.EventPool.RegisterStructFun("test", &Test{})
-// 	ser.Listening(":8565")
-// }
+//-----------------------------------------
+func main() {
+	log.SetFlags(log.Lshortfile | log.LstdFlags | log.Llongfile)
+	ser.EventPool.RegisterEvent(&event{})
+	ser.EventPool.RegisterStructFun("test", &Test{})
+	ser.Listening(":8565")
+}

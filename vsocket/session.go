@@ -17,7 +17,7 @@ type session struct {
 }
 
 // Session : New Session for session
-func newSession(id uint32, con net.Conn) *session {
+func NewSession(id uint32, con net.Conn) *session {
 	return &session{
 		ID:    id,
 		Con:   con,
@@ -44,12 +44,12 @@ func (s *session) updateTime() {
 
 type sessionManager struct {
 	isWebSocket bool
-	ser         *service
+	ser         *serv
 	sessions    sync.Map
 }
 
 // SessonManager : new SessonManager
-func newSessonManager(server *service) *sessionManager {
+func newSessonManager(server *serv) *sessionManager {
 	if server == nil {
 		return nil
 	}
@@ -69,7 +69,7 @@ func (sm *sessionManager) GetSessionByID(id uint32) *session {
 }
 
 func (sm *sessionManager) SetSession(fd uint32, conn net.Conn) {
-	sess := newSession(fd, conn)
+	sess := NewSession(fd, conn)
 	sm.sessions.Store(fd, sess)
 }
 

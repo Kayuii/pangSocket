@@ -5,7 +5,7 @@ import (
 	"net"
 
 	"github.com/Kayuii/pangSocket/util"
-	// ms "github.com/Kayuii/pangSocket"
+	ms "github.com/Kayuii/pangSocket/vsocket"
 	// "github.com/Kayuii/pangSocket/util"
 )
 
@@ -14,7 +14,7 @@ func main() {
 	if err != nil {
 		return
 	}
-	defer conn.Close()
+	// defer conn.Close()
 
 	data := make(map[string]string)
 	data["module"] = "test"
@@ -24,7 +24,7 @@ func main() {
 	a := []byte(util.Map2String(data))
 
 	//把string打包
-	sock := &ms.tcpSocket{}
+	sock := &ms.TCPSocket{}
 	b := sock.Pack(a)
 
 	//发送数据
