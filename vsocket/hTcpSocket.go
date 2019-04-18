@@ -1,4 +1,4 @@
-package pangsocket
+package vsocket
 
 import (
 	"bytes"
@@ -16,16 +16,16 @@ const (
 	CONSTMLENGTH      = 4
 )
 
-type tcpSocket struct {
+type TCPSocket struct {
 }
 
-func newTCPSocket() *tcpSocket {
-	tsocket := &tcpSocket{}
+func newTCPSocket() *TCPSocket {
+	tsocket := &TCPSocket{}
 	return tsocket
 }
 
 // tcp接收消息
-func (ts *tcpSocket) ConnHandle(msf *service, sess *session) {
+func (ts *TCPSocket) ConnHandle(msf *service, sess *session) {
 	defer func() {
 		msf.SessionMaster.DelSessionByID(sess.ID)
 		//调用断开链接事件
@@ -61,12 +61,12 @@ func (ts *tcpSocket) ConnHandle(msf *service, sess *session) {
 }
 
 // 封包
-func (ts *tcpSocket) Pack(message []byte) []byte {
+func (ts *TCPSocket) Pack(message []byte) []byte {
 	return append(append([]byte(CONSTHEADER), ts.IntToBytes(len(message))...), message...)
 }
 
 // 解包
-func (ts *tcpSocket) Depack(buff []byte) ([]byte, []byte, error) {
+func (ts *TCPSocket) Depack(buff []byte) ([]byte, []byte, error) {
 	length := len(buff)
 	//如果包长小于header 就直接返回 因为接收的数据不完整
 	if length < CONSTHEADERLENGTH+CONSTMLENGTH {
@@ -88,14 +88,14 @@ func (ts *tcpSocket) Depack(buff []byte) ([]byte, []byte, error) {
 	return buffs, data, nil
 }
 
-func (ts *tcpSocket) IntToBytes(n int) []byte {
+func (ts *TCPSocket) IntToBytes(n int) []byte {
 	x := int32(n)
 	bytesBuffer := bytes.NewBuffer([]byte{})
 	binary.Write(bytesBuffer, binary.BigEndian, x)
 	return bytesBuffer.Bytes()
 }
 
-func (ts *tcpSocket) BytesToInt(b []byte) int {
+func (ts *TCPSocket) BytesToInt(b []byte) int {
 	bytesBuffer := bytes.NewBuffer(b)
 	var x int32
 	binary.Read(bytesBuffer, binary.BigEndian, &x)

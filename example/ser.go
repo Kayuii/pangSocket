@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 	"net"
-	// pangsocket "github.com/Kayuii/pangSocket"
+	// vsocket "pangSocket"
 )
 
-var ser = pangsocket.newService(&ps.service.tcpSocket)
+var ser = vsocket.newService(&ps.service.tcpSocket)
 
 //框架事件
 //----------------------------------------------------------------------------------------------------------------------

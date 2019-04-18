@@ -1,21 +1,19 @@
-package pangsocket
+package vsocket
 
 import (
 	"log"
 	"net"
 )
 
-type (
-	socketTypes interface {
-		ConnHandle(server *service, sess *session)
-		Pack(data []byte) []byte
-	}
-	service struct {
-		EventPool     *routerMap
-		SessionMaster *sessionManager
-		SocketType    socketTypes
-	}
-)
+type socketTypes interface {
+	ConnHandle(server *service, sess *session)
+	Pack(data []byte) []byte
+}
+type service struct {
+	EventPool     *routerMap
+	SessionMaster *sessionManager
+	SocketType    socketTypes
+}
 
 func newService(socketType socketTypes) *service {
 	ser := &service{

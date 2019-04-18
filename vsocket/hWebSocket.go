@@ -1,4 +1,4 @@
-package pangsocket
+package vsocket
 
 import (
 	"bufio"
@@ -13,11 +13,11 @@ import (
 	"github.com/Kayuii/pangSocket/util"
 )
 
-type webSocket struct {
+type WebSocket struct {
 }
 
 // ws接收消息
-func (ws *webSocket) ConnHandle(msf *service, sess *session) {
+func (ws *WebSocket) ConnHandle(msf *service, sess *session) {
 	defer func() {
 		msf.SessionMaster.DelSessionByID(sess.ID)
 		//调用断开链接事件
@@ -97,8 +97,8 @@ func (ws *webSocket) ConnHandle(msf *service, sess *session) {
 	}
 }
 
-//webSocket 打包事件
-func (ws *webSocket) Pack(data []byte) []byte {
+//WebSocket 打包事件
+func (ws *WebSocket) Pack(data []byte) []byte {
 	length := len(data)
 	frame := []byte{129}
 	switch {
@@ -122,7 +122,7 @@ func (ws *webSocket) Pack(data []byte) []byte {
 }
 
 //握手包
-func (ws *webSocket) Handshake(sess *session) bool {
+func (ws *WebSocket) Handshake(sess *session) bool {
 	reader := bufio.NewReader(sess.Con)
 	key := ""
 	str := ""
@@ -136,7 +136,7 @@ func (ws *webSocket) Handshake(sess *session) bool {
 			break
 		}
 		str = string(line)
-		if strings.HasPrefix(str, "Sec-webSocket-Key") {
+		if strings.HasPrefix(str, "Sec-WebSocket-Key") {
 			key = str[19:43]
 		}
 	}
@@ -146,9 +146,9 @@ func (ws *webSocket) Handshake(sess *session) bool {
 
 	header := "HTTP/1.1 101 Switching Protocols\r\n" +
 		"Connection: Upgrade\r\n" +
-		"Sec-webSocket-Version: 13\r\n" +
-		"Sec-webSocket-Accept: " + key + "\r\n" +
-		"Upgrade: webSocket\r\n\r\n"
+		"Sec-WebSocket-Version: 13\r\n" +
+		"Sec-WebSocket-Accept: " + key + "\r\n" +
+		"Upgrade: websocket\r\n\r\n"
 	sess.Con.Write([]byte(header))
 	return true
 }

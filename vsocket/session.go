@@ -1,4 +1,4 @@
-package pangsocket
+package vsocket
 
 import (
 	"log"
